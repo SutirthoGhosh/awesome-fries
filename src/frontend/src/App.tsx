@@ -1656,20 +1656,6 @@ export default function App() {
             <p style={{ fontSize: "12px", color: "oklch(0.55 0.015 250)" }}>
               © {new Date().getFullYear()} Awesome Fries. All rights reserved.
             </p>
-            <p style={{ fontSize: "12px", color: "oklch(0.45 0.012 250)" }}>
-              Built with ❤️ using{" "}
-              <a
-                href={`https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(window.location.hostname)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  color: "oklch(0.65 0.015 250)",
-                  textDecoration: "none",
-                }}
-              >
-                caffeine.ai
-              </a>
-            </p>
           </div>
         </div>
 
