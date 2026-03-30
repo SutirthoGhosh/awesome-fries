@@ -1,0 +1,526 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --radius: 0.75rem;
+    /* Light mode (unused for this dark-only app, kept for shadcn compatibility) */
+    --background: 0.96 0.005 250;
+    --foreground: 0.14 0.008 260;
+    --card: 1 0 0;
+    --card-foreground: 0.145 0 0;
+    --popover: 1 0 0;
+    --popover-foreground: 0.145 0 0;
+    --primary: 0.54 0.19 25;
+    --primary-foreground: 0.98 0 0;
+    --secondary: 0.82 0.145 75;
+    --secondary-foreground: 0.1 0.005 250;
+    --muted: 0.22 0.012 255;
+    --muted-foreground: 0.72 0.018 250;
+    --accent: 0.82 0.145 75;
+    --accent-foreground: 0.1 0.005 250;
+    --destructive: 0.54 0.19 25;
+    --destructive-foreground: 0.985 0 0;
+    --border: 0.22 0.012 255;
+    --input: 0.22 0.012 255;
+    --ring: 0.54 0.19 25;
+    --chart-1: 0.54 0.19 25;
+    --chart-2: 0.82 0.145 75;
+    --chart-3: 0.6 0.15 150;
+    --chart-4: 0.65 0.18 200;
+    --chart-5: 0.7 0.2 50;
+    --sidebar: 0.12 0.006 260;
+    --sidebar-foreground: 0.96 0.005 250;
+    --sidebar-primary: 0.54 0.19 25;
+    --sidebar-primary-foreground: 0.98 0 0;
+    --sidebar-accent: 0.22 0.012 255;
+    --sidebar-accent-foreground: 0.96 0.005 250;
+    --sidebar-border: 0.22 0.012 255;
+    --sidebar-ring: 0.54 0.19 25;
+    /* Restaurant brand tokens */
+    --af-red: 0.54 0.19 25;
+    --af-gold: 0.82 0.145 75;
+    --af-bg: 0.09 0.005 250;
+    --af-surface: 0.13 0.008 260;
+    --af-surface2: 0.16 0.008 260;
+    --af-text: 0.96 0.005 250;
+    --af-muted: 0.72 0.018 250;
+    --af-border: 0.22 0.012 255;
+  }
+
+  .dark {
+    --background: 0.09 0.005 250;
+    --foreground: 0.96 0.005 250;
+    --card: 0.13 0.008 260;
+    --card-foreground: 0.96 0.005 250;
+    --popover: 0.16 0.008 260;
+    --popover-foreground: 0.96 0.005 250;
+    --primary: 0.54 0.19 25;
+    --primary-foreground: 0.98 0 0;
+    --secondary: 0.82 0.145 75;
+    --secondary-foreground: 0.1 0.005 250;
+    --muted: 0.22 0.012 255;
+    --muted-foreground: 0.72 0.018 250;
+    --accent: 0.82 0.145 75;
+    --accent-foreground: 0.1 0.005 250;
+    --destructive: 0.54 0.19 25;
+    --destructive-foreground: 0.985 0 0;
+    --border: 0.22 0.012 255;
+    --input: 0.22 0.012 255;
+    --ring: 0.54 0.19 25;
+    --chart-1: 0.54 0.19 25;
+    --chart-2: 0.82 0.145 75;
+    --chart-3: 0.6 0.15 150;
+    --chart-4: 0.65 0.18 200;
+    --chart-5: 0.7 0.2 50;
+    --sidebar: 0.12 0.006 260;
+    --sidebar-foreground: 0.96 0.005 250;
+    --sidebar-primary: 0.54 0.19 25;
+    --sidebar-primary-foreground: 0.98 0 0;
+    --sidebar-accent: 0.22 0.012 255;
+    --sidebar-accent-foreground: 0.96 0.005 250;
+    --sidebar-border: 0.22 0.012 255;
+    --sidebar-ring: 0.54 0.19 25;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-af-bg text-af-text font-poppins;
+    background-color: oklch(0.09 0.005 250);
+    color: oklch(0.96 0.005 250);
+    font-family: "Poppins", sans-serif;
+    overflow-x: hidden;
+  }
+}
+
+/* ─── Scroll Progress Bar ─── */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, oklch(0.54 0.19 25), oklch(0.82 0.145 75));
+  z-index: 9999;
+  transition: width 0.1s linear;
+  border-radius: 0 2px 2px 0;
+  box-shadow: 0 0 8px oklch(0.82 0.145 75 / 0.7);
+}
+
+/* ─── Navbar ─── */
+.navbar {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  width: calc(100% - 48px);
+  max-width: 1200px;
+  background: oklch(0.13 0.008 260 / 0.4);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid oklch(0.22 0.012 255 / 0.5);
+  border-radius: 999px;
+  padding: 12px 24px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.navbar.scrolled {
+  background: oklch(0.1 0.006 255 / 0.88);
+  box-shadow: 0 4px 32px oklch(0 0 0 / 0.5);
+  top: 10px;
+}
+.nav-link {
+  color: oklch(0.72 0.018 250);
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.2s ease;
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 2px;
+}
+.nav-link:hover,
+.nav-link.active {
+  color: oklch(0.82 0.145 75);
+}
+.nav-link.active::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: oklch(0.82 0.145 75);
+  border-radius: 2px;
+}
+
+/* ─── Scroll Reveal Animations ─── */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 {
+  transition-delay: 0.1s;
+}
+.reveal-delay-2 {
+  transition-delay: 0.2s;
+}
+.reveal-delay-3 {
+  transition-delay: 0.3s;
+}
+.reveal-delay-4 {
+  transition-delay: 0.4s;
+}
+
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+.reveal-right {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ─── Hero Float Animation ─── */
+@keyframes hero-float {
+  0%,
+  100% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-18px) scale(1.02);
+  }
+}
+.hero-image-float {
+  animation: hero-float 5s ease-in-out infinite;
+}
+
+/* ─── Hero Background Glows ─── */
+.hero-glow-red {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(
+    circle,
+    oklch(0.54 0.19 25 / 0.2) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  pointer-events: none;
+}
+.hero-glow-gold {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(
+    circle,
+    oklch(0.82 0.145 75 / 0.15) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* ─── Button Animations ─── */
+@keyframes btn-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 oklch(0.54 0.19 25 / 0.6);
+  }
+  50% {
+    box-shadow: 0 0 0 12px oklch(0.54 0.19 25 / 0);
+  }
+}
+.btn-pulse-anim {
+  animation: btn-pulse 2.5s ease-in-out infinite;
+}
+
+.btn-primary {
+  background: oklch(0.54 0.19 25);
+  color: oklch(0.98 0 0);
+  font-weight: 600;
+  font-size: 15px;
+  padding: 12px 28px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  font-family: "Poppins", sans-serif;
+}
+.btn-primary:hover {
+  background: oklch(0.6 0.21 25);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px oklch(0.54 0.19 25 / 0.45);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: oklch(0.82 0.145 75);
+  font-weight: 600;
+  font-size: 15px;
+  padding: 11px 28px;
+  border-radius: 999px;
+  border: 2px solid oklch(0.82 0.145 75);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  font-family: "Poppins", sans-serif;
+}
+.btn-secondary:hover {
+  background: oklch(0.82 0.145 75 / 0.12);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px oklch(0.82 0.145 75 / 0.25);
+}
+
+/* ─── Menu Cards ─── */
+.menu-card {
+  background: oklch(0.13 0.008 260 / 0.8);
+  border: 1px solid oklch(0.22 0.012 255 / 0.6);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  cursor: default;
+  backdrop-filter: blur(8px);
+}
+.menu-card:hover {
+  transform: translateY(-8px) scale(1.02);
+}
+.menu-card.glow-red:hover {
+  box-shadow: 0 16px 40px oklch(0.54 0.19 25 / 0.35);
+  border-color: oklch(0.54 0.19 25 / 0.5);
+}
+.menu-card.glow-orange:hover {
+  box-shadow: 0 16px 40px oklch(0.68 0.19 45 / 0.35);
+  border-color: oklch(0.68 0.19 45 / 0.5);
+}
+.menu-card.glow-yellow:hover {
+  box-shadow: 0 16px 40px oklch(0.82 0.145 75 / 0.35);
+  border-color: oklch(0.82 0.145 75 / 0.5);
+}
+.menu-card.glow-teal:hover {
+  box-shadow: 0 16px 40px oklch(0.68 0.15 195 / 0.35);
+  border-color: oklch(0.68 0.15 195 / 0.5);
+}
+
+/* ─── Why Us Cards ─── */
+.why-card {
+  background: oklch(0.13 0.008 260 / 0.7);
+  border: 1px solid oklch(0.22 0.012 255 / 0.5);
+  border-radius: 20px;
+  padding: 36px 24px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  backdrop-filter: blur(8px);
+}
+.why-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 36px oklch(0.82 0.145 75 / 0.2);
+  border-color: oklch(0.82 0.145 75 / 0.35);
+}
+.why-card:hover .why-icon {
+  text-shadow: 0 0 20px oklch(0.82 0.145 75 / 0.8);
+  transform: scale(1.1);
+}
+.why-icon {
+  font-size: 48px;
+  display: block;
+  margin-bottom: 16px;
+  transition: transform 0.3s ease, text-shadow 0.3s ease;
+}
+
+/* ─── Contact Cards ─── */
+.contact-card {
+  background: oklch(0.13 0.008 260 / 0.7);
+  border: 1px solid oklch(0.22 0.012 255 / 0.5);
+  border-radius: 20px;
+  padding: 32px;
+  backdrop-filter: blur(12px);
+}
+
+/* ─── Section labels ─── */
+.section-label {
+  display: inline-block;
+  background: oklch(0.54 0.19 25 / 0.15);
+  border: 1px solid oklch(0.54 0.19 25 / 0.35);
+  color: oklch(0.82 0.145 75);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 6px 16px;
+  border-radius: 999px;
+  margin-bottom: 16px;
+}
+
+/* ─── Price tag ─── */
+.price-tag {
+  display: inline-block;
+  background: oklch(0.82 0.145 75 / 0.15);
+  border: 1px solid oklch(0.82 0.145 75 / 0.35);
+  color: oklch(0.82 0.145 75);
+  font-weight: 700;
+  font-size: 14px;
+  padding: 4px 12px;
+  border-radius: 999px;
+}
+
+/* ─── Service Badge ─── */
+.service-badge {
+  background: oklch(0.16 0.01 260 / 0.8);
+  border: 1px solid oklch(0.22 0.012 255 / 0.5);
+  border-radius: 14px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transition: border-color 0.2s;
+}
+.service-badge:hover {
+  border-color: oklch(0.82 0.145 75 / 0.5);
+}
+
+/* ─── Hamburger menu mobile ─── */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 4px;
+  background: none;
+  border: none;
+}
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: oklch(0.96 0.005 250);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+.hamburger.open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: oklch(0.09 0.005 250 / 0.97);
+  z-index: 999;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  backdrop-filter: blur(8px);
+}
+.mobile-menu.open {
+  display: flex;
+}
+.mobile-menu a {
+  font-size: 24px;
+  font-weight: 600;
+  color: oklch(0.96 0.005 250);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.mobile-menu a:hover {
+  color: oklch(0.82 0.145 75);
+}
+
+@media (max-width: 768px) {
+  .hamburger {
+    display: flex;
+  }
+  .nav-links {
+    display: none;
+  }
+  .navbar {
+    width: calc(100% - 32px);
+    padding: 12px 18px;
+  }
+}
+
+/* ─── Gradient text ─── */
+.text-gradient-gold {
+  background: linear-gradient(90deg, oklch(0.82 0.145 75), oklch(0.9 0.12 90));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.text-gradient-red {
+  background: linear-gradient(90deg, oklch(0.54 0.19 25), oklch(0.68 0.19 45));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Divider ─── */
+.section-divider {
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, oklch(0.54 0.19 25), oklch(0.82 0.145 75));
+  border-radius: 2px;
+  margin: 0 auto 20px;
+}
+
+/* ─── Map iframe ─── */
+.map-frame {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid oklch(0.22 0.012 255 / 0.5);
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: oklch(0.09 0.005 250);
+}
+::-webkit-scrollbar-thumb {
+  background: oklch(0.22 0.012 255);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.54 0.19 25);
+}
